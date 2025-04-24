@@ -23,8 +23,8 @@ public class PaymentServiceImp implements PaymentService {
                  SessionCreateParams.
                  PaymentMethodType.CARD).
                  setMode(SessionCreateParams.Mode.PAYMENT).
-                 setSuccessUrl("http://localhost:5173/payment/success/"+order.getId()).
-                 setCancelUrl("http://localhost:5173/payment/fail").
+                 setSuccessUrl("https://foodie-fly.vercel.app/payment/success/"+order.getId()).
+                 setCancelUrl("https://foodie-fly.vercel.app/payment/fail").
                  addLineItem(SessionCreateParams.LineItem.builder().
                          setQuantity(1L).setPriceData(SessionCreateParams.LineItem.PriceData.builder()
                                  .setCurrency("usd")
