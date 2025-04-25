@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,26 +38,48 @@ public class AppConfig { // here we will write spring security configuration
 
     }
 
-    private CorsConfigurationSource corsConfigurationSource() {
-        return new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration cfg = new CorsConfiguration();
 
-                cfg.setAllowedOrigins(Arrays.asList(
-//                        "",  use this when i have deployed by backend
-                        "http://localhost:5173",
-                        "https://foodie-fly.vercel.app"
-                )); // now we can set frontend urls which this backend should be accessable
-                cfg.setAllowedMethods(Collections.singletonList("*"));// methods we want to allow for frontend url
-                cfg.setAllowCredentials(true);
-                cfg.setAllowedHeaders(Collections.singletonList("*"));
-                cfg.setExposedHeaders(Arrays.asList("Authorization")); // we will use only authorization so that we can send our jwt token
-                cfg.setMaxAge(3600L);
-                return cfg;
-            }
-        };
+//    private CorsConfigurationSource corsConfigurationSource() {
+//        return new CorsConfigurationSource() {
+//            @Override
+//            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+//                CorsConfiguration cfg = new CorsConfiguration();
+//
+//                cfg.setAllowedOrigins(Arrays.asList(
+////                        "",  use this when i have deployed by backend
+//                        "http://localhost:5173",
+//                        "https://foodie-fly.vercel.app"
+//                )); // now we can set frontend urls which this backend should be accessable
+//                cfg.setAllowedMethods(Collections.singletonList("*"));// methods we want to allow for frontend url
+//                cfg.setAllowCredentials(true);
+//                cfg.setAllowedHeaders(Collections.singletonList("*"));
+//                cfg.setExposedHeaders(Arrays.asList("Authorization")); // we will use only authorization so that we can send our jwt token
+//                cfg.setMaxAge(3600L);
+//                return cfg;
+//            }
+//        };
+//    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration cfg = new CorsConfiguration();
+
+        cfg.setAllowedOrigins(Arrays.asList(
+                "http://localhost:5173",
+                "https://foodie-fly.vercel.app"
+        ));
+        cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        cfg.setAllowCredentials(true);
+        cfg.setAllowedHeaders(Collections.singletonList("*"));
+        cfg.setExposedHeaders(Arrays.asList("Authorization"));
+        cfg.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cfg);
+
+        return source; // ✅ This is correct!
     }
+
 
     @Bean
     PasswordEncoder passwordEncoder() {
