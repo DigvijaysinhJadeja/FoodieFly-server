@@ -27,7 +27,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         String jwt = request.getHeader(JwtCostant.JWT_HEADER);
-        logger.info(jwt);
         //Bearer token
 
         if(jwt!=null){ //if jwt notnull it means jwt is provided in header we need to validate jwt token
