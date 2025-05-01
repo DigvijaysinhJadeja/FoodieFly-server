@@ -50,6 +50,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             catch (Exception e){
+                e.printStackTrace();
                 throw new BadCredentialsException("Invalid token......");
             }
         }
