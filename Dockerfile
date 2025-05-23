@@ -3,6 +3,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/Online-Food-Ordering-0.0.1-SNAPSHOT.jar Oniline-Food-Ordering.jar
+COPY --from=build /target/Online-Food-Ordering-0.0.1-SNAPSHOT.jar Online-Food-Ordering.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","Online-Food-Ordering.jar"]
+ENTRYPOINT ["java", "-jar", "Online-Food-Ordering.jar"]
