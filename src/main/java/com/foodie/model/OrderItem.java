@@ -24,8 +24,10 @@ public class OrderItem {
     private int quantity;
 
     private Long totalPrice;
-    
-    private List<String> ingredients;
+
+    @Column(columnDefinition = "varchar(255)[]")
+    private String[] ingredients;
+
 
 
 

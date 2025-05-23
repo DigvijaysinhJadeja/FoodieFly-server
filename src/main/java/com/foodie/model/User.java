@@ -36,8 +36,14 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")  // user have one to many relation with order entity
     private List<Order> orders = new ArrayList< >();
 
-    @ElementCollection
-    private List<RestaurantDto>favorites = new ArrayList();
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_restaurants",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    private List<Restaurant> favorites = new ArrayList<>();
+
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true) // whenever we delete user we need to delete all the addresses related to him.
     private List<Address>addresses =  new ArrayList<>();

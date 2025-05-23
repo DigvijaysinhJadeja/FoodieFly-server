@@ -26,7 +26,7 @@ public class AppConfig { // here we will write spring security configuration
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.sessionManagement(management->management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))//which endpoint should be whitelisted,secure,accessable certain role provide by user.
-                .authorizeHttpRequests(Autorize->Autorize
+                .authorizeHttpRequests(Authorize->Authorize
                         .requestMatchers("/api/admin/**").hasAnyRole( "RESTAURANT_OWNER","ADMIN") // endpoint starting with api/admin is available for only those user who have a role of restaurant owner or admin.
                         .requestMatchers("/api/**").authenticated() // user must provide JWT token then he will be able to provide all the endpoints
                         .anyRequest().permitAll()// without any token user can only access this (only during signup/signin)
@@ -47,7 +47,6 @@ public class AppConfig { // here we will write spring security configuration
 
                 cfg.setAllowedOrigins(Arrays.asList(
 //                        "",  use this when i have deployed by backend
-                       "http://localhost:5173",
                         "https://foodie-fly.vercel.app"
                 )); // now we can set frontend urls which this backend should be accessable
                 cfg.setAllowedMethods(Collections.singletonList("*"));// methods we want to allow for frontend url
@@ -59,26 +58,6 @@ public class AppConfig { // here we will write spring security configuration
             }
         };
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration cfg = new CorsConfiguration();
-//
-//        cfg.setAllowedOrigins(Arrays.asList(
-//                "http://localhost:5173",
-//                "https://foodie-fly.vercel.app"
-//        ));
-//        cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//        cfg.setAllowCredentials(true);
-//        cfg.setAllowedHeaders(Collections.singletonList("*"));
-//        cfg.setExposedHeaders(Arrays.asList("Authorization"));
-//        cfg.setMaxAge(3600L);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", cfg);
-//
-//        return source; // ✅ This is correct!
-//    }
 
 
     @Bean

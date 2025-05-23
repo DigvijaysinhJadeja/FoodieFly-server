@@ -28,7 +28,8 @@ public class CartItem {
 
     private int quantity;
 
-    private List<String> ingredients;
+    @Column(columnDefinition = "varchar(255)[]")
+    private String[] ingredients;
 
     private Long totalPrice;
 }

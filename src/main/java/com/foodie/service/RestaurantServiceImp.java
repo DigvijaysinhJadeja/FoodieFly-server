@@ -116,34 +116,31 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
-    public RestaurantDto addToFavorites(Long RestaurantId, User user) throws Exception {
+    public Restaurant addToFavorites(Long restaurantId, User user) throws Exception {
 
-        Restaurant restaurant = findRestaurantById(RestaurantId);
+        Restaurant restaurant = findRestaurantById(restaurantId);
 
-        RestaurantDto dto = new RestaurantDto();
-        dto.setDescription(restaurant.getDescription());
-        dto.setImages(restaurant.getImages());
-        dto.setTitle(restaurant.getName());
-        dto.setId(restaurant.getId());
-
+        List<Restaurant> favorites = user.getFavorites();
         boolean isFavorited = false;
-        List<RestaurantDto>favorites = user.getFavorites();
-        for(RestaurantDto favorite : favorites) {
-            if(favorite.getId().equals(RestaurantId)){
+
+        for (Restaurant favorite : favorites) {
+            if (favorite.getId().equals(restaurantId)) {
                 isFavorited = true;
                 break;
             }
         }
 
-        if(isFavorited) {
-            favorites.removeIf(favorite->favorite.getId().equals(RestaurantId));
-        }else{
-            favorites.add(dto);
+        if (isFavorited) {
+            favorites.removeIf(favorite -> favorite.getId().equals(restaurantId));
+        } else {
+            favorites.add(restaurant);
         }
+
         userRepository.save(user);
 
-        return dto;
+        return restaurant;
     }
+
 
     @Override
     public Restaurant updateRestaurantStatus(Long id) throws Exception {
